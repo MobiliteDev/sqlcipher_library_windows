@@ -2,6 +2,7 @@ library sqlite3_library_windows;
 
 import 'dart:ffi' show DynamicLibrary;
 import 'dart:io' show Platform, File;
+import 'package:path/path.dart';
 
 ///relative path to
 const assets_package_dir =
@@ -21,25 +22,26 @@ const openssl_lib_ssl_dll = 'libssl-1_1-x64.dll';
 ///set useOpenSSLEmbededDlls to false if you prefer let Windows searching DLLs on the system
 DynamicLibrary openSQLCipherOnWindows({bool useOpenSSLEmbededDlls = true}) {
   late DynamicLibrary library;
-  String sep = Platform.pathSeparator;
+
   String exeDirPath = File(Platform.resolvedExecutable).parent.path;
   print('executableDirectoryPath: $exeDirPath');
 
-  String packageAssetsDirPath =
-      exeDirPath + Platform.pathSeparator + assets_package_dir;
+  String packageAssetsDirPath = normalize(join(exeDirPath, assets_package_dir));
   print('packageAssetsDirectoryPath: $packageAssetsDirPath');
 
   //OpenSSL libcryptoxxx.dll FullPath  destination
-  String libCryptoDllDestFullPath = exeDirPath + sep + openssl_lib_crypto_dll;
+  String libCryptoDllDestFullPath =
+      normalize(join(exeDirPath, openssl_lib_crypto_dll));
   //OpenSSL libsslxxx.dll FullPath  destination
-  String libSSLDllDestFullPath = exeDirPath + sep + openssl_lib_ssl_dll;
+  String libSSLDllDestFullPath =
+      normalize(join(exeDirPath, openssl_lib_ssl_dll));
 
   //OpenSSL libcryptoxxx.dll FullPath  source
   String libCyptoDllSourceFullPath =
-      packageAssetsDirPath + sep + openssl_lib_crypto_dll;
+      normalize(join(packageAssetsDirPath, openssl_lib_crypto_dll));
   //OpenSSL libsslxxx.dll FullPath  source
   String libSSLDllSourceFullPath =
-      packageAssetsDirPath + sep + openssl_lib_ssl_dll;
+      normalize(join(packageAssetsDirPath, openssl_lib_ssl_dll));
 
   //Chek if it is needed to copy DLLs in another directory that my_app.exe could use when executing
   if (useOpenSSLEmbededDlls) {
@@ -71,7 +73,7 @@ DynamicLibrary openSQLCipherOnWindows({bool useOpenSSLEmbededDlls = true}) {
   //Now load the SQLCipher DLL
   try {
     String sqliteLibraryPath =
-        packageAssetsDirPath + sep + sqlcipher_windows_dll;
+        normalize(join(packageAssetsDirPath, sqlcipher_windows_dll));
     print('SQLCipherLibraryPath: $sqliteLibraryPath');
 
     library = DynamicLibrary.open(sqliteLibraryPath);
