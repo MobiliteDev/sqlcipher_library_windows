@@ -1,17 +1,17 @@
 name: sqlcipher_library_windows
 description: Flutter package to bundle SQLCipher(sqlite3) library to your windows apps
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/MobiliteDev/sqlcipher_library_windows
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=2.15.0 <3.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  path: '>=1.8.0 <3.0.0'
-  
+  path: ">=1.8.0 <3.0.0"
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -21,7 +21,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-   assets:
-     - assets/sqlcipher.dll
-     - assets/libcrypto-1_1-x64.dll #needed for sqlcipher
-     - assets/libssl-1_1-x64.dll #needed for sqlcipher (?)
+  assets:
+    - assets/sqlcipher.dll
+    - assets/libcrypto-1_1-x64.dll #needed for sqlcipher
+    - assets/libssl-1_1-x64.dll #needed for sqlcipher (?)
